@@ -7,6 +7,7 @@ import debug from "@/log";
 import camelize from "camelize-ts";
 import snakify from "snakify-ts";
 
+// TODO: USE JAVASCRIPT SDK
 export class TodoistApiClient {
   private token: string;
   private fetcher: WebFetcher;
@@ -31,6 +32,11 @@ export class TodoistApiClient {
   public async createTask(content: string, options?: CreateTaskParams): Promise<void> {
     const body = snakify({ content: content, ...(options ?? {}) });
     await this.do("/tasks", "POST", body);
+  }
+
+  public async updateTask(content: string, id: TaskId, options?: CreateTaskParams): Promise<void> {
+    const body = snakify({ content: content, ...(options ?? {}) });
+    await this.do(`/tasks/${id}`, "POST", body);
   }
 
   public async closeTask(id: TaskId): Promise<void> {

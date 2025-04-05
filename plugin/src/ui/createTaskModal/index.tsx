@@ -1,3 +1,4 @@
+import type { TaskId } from "@/api/domain/task";
 import { t } from "@/i18n";
 import { timezone } from "@/infra/time";
 import { useSettingsStore } from "@/settings";
@@ -24,6 +25,7 @@ export type TaskCreationOptions = {
 };
 
 type CreateTaskProps = {
+  taskId?: TaskId,
   initialContent: string;
   fileContext: TFile | undefined;
   options: TaskCreationOptions;
@@ -61,6 +63,7 @@ export const CreateTaskModal: React.FC<CreateTaskProps> = (props) => {
 const CreateTaskModalContent: React.FC<CreateTaskProps> = ({
   initialContent,
   fileContext,
+  taskId,
   options: initialOptions,
 }) => {
   const plugin = PluginContext.use();
@@ -134,6 +137,45 @@ const CreateTaskModalContent: React.FC<CreateTaskProps> = ({
     }
   };
 
+  const updateTask = async () => {
+    if (isSubmitButtonDisabled) {
+      return;
+    }
+
+    modal.close();
+
+    const params: CreateTaskParams = {
+      description: buildWithLink(description, options.appendLinkToDescription),
+      priority: priority,
+      labels: labels.map((l) => l.name),
+      projectId: project.projectId,
+      sectionId: project.sectionId,
+    };
+
+    if (dueDate !== undefined) {
+      if (dueDate.time !== undefined) {
+        params.dueDatetime = toZoned(
+          toCalendarDateTime(dueDate.date, dueDate.time),
+          timezone(),
+        ).toAbsoluteString();
+      } else {
+        params.dueDate = dueDate.date.toString();
+      }
+    }
+
+    try {
+      await plugin.services.todoist.actions.updateTask(
+        buildWithLink(content, options.appendLinkToContent),
+        taskId ?? "",
+        params,
+      );
+      new Notice(i18n.successNotice);
+    } catch (err) {
+      new Notice(i18n.errorNotice);
+      console.error("Failed to create task", err);
+    }
+  };
+
   return (
     <div className="task-creation-modal-root">
       <TaskContentInput
@@ -154,6 +196,7 @@ const CreateTaskModalContent: React.FC<CreateTaskProps> = ({
         className="task-description"
         placeholder={i18n.dueDatePlaceholder}
         onChange={setDueDate}
+        onEnterKey={updateTask}
       />
       <div className="task-creation-selectors">
         <DueDateSelector selected={dueDate} setSelected={setDueDate} />

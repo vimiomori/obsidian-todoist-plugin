@@ -1,4 +1,5 @@
 import { timezone } from "@/infra/time";
+import * as chrono from 'chrono-node';
 import { useState } from "react";
 import {
   today,
@@ -58,19 +59,17 @@ export const DueDateInput: React.FC<Props> = ({
 
 
 const getDate = (input: string) => {
-  if (input === "today") {
+  const date = chrono.parseDate(input)
+  if (date === null) {
     return {
-      date: today(timezone()),
-      time: undefined
-    }
-  } else if (input === "tomorrow") {
-    return {
-      date: today(timezone()).add({ days: 1 }),
+      date: parseDate(""),
       time: undefined
     }
   }
+
   return {
-    date: parseDate(input),
+    // date: parseDate(`${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`),
+    date: parseDate(date.toISOString().split("T")[0]),
     time: undefined
   }
 }

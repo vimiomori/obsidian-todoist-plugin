@@ -133,6 +133,61 @@ export const en: Translations = {
       },
     },
   },
+  // TODO: make task modal with common fields 
+  updateTaskModal: {
+    loadingMessage: "Loading Todoist data...",
+    successNotice: "Task updated successfully",
+    errorNotice: "Failed to update task",
+    taskNamePlaceholder: "Task name",
+    descriptionPlaceholder: "Description",
+    dueDatePlaceholder: "Due date",
+    appendedLinkToContentMessage: "A link to this page will be appended to the task name",
+    appendedLinkToDescriptionMessage:
+      "A link to this page will be appended to the task description",
+    cancelButtonLabel: "Cancel",
+    addTaskButtonLabel: "Add task",
+    failedToFindInboxNotice: "Error: could not find inbox project",
+    dateSelector: {
+      buttonLabel: "Set due date",
+      dialogLabel: "Due date selector",
+      suggestionsLabel: "Due date suggestions",
+      datePickerLabel: "Task date",
+      emptyDate: "Due date",
+      today: "Today",
+      tomorrow: "Tomorrow",
+      nextWeek: "Next week",
+      noDate: "No date",
+      timeDialog: {
+        timeLabel: "Time",
+        saveButtonLabel: "Save",
+        cancelButtonLabel: "Cancel",
+      },
+    },
+    labelSelector: {
+      buttonLabel: "Set labels",
+      buttonText: (num: number) => {
+        return `Labels (${num})`;
+      },
+      labelOptionsLabel: "Label options",
+    },
+    prioritySelector: {
+      buttonLabel: "Set priority",
+      optionsLabel: "Task priority options",
+      p1: "Priority 1",
+      p2: "Priority 2",
+      p3: "Priority 3",
+      p4: "Priority 4",
+    },
+    projectSelector: {
+      buttonLabel: "Set project",
+      selectorLabel: "Project selector",
+      optionsLabel: "Project options",
+      search: {
+        label: "Filter projects",
+        placeholder: "Type a project name",
+      },
+    },
+  },
   onboardingModal: {
     failureNoticeMessage: "Failed to save API token",
     explainer:

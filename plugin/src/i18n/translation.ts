@@ -126,6 +126,57 @@ export type Translations = {
       };
     };
   };
+  updateTaskModal: {
+    loadingMessage: string;
+    successNotice: string;
+    errorNotice: string;
+    taskNamePlaceholder: string;
+    descriptionPlaceholder: string;
+    dueDatePlaceholder: string;
+    appendedLinkToContentMessage: string;
+    appendedLinkToDescriptionMessage: string;
+    cancelButtonLabel: string;
+    addTaskButtonLabel: string;
+    failedToFindInboxNotice: string;
+    dateSelector: {
+      buttonLabel: string;
+      dialogLabel: string;
+      suggestionsLabel: string;
+      datePickerLabel: string;
+      emptyDate: string;
+      today: string;
+      tomorrow: string;
+      nextWeek: string;
+      noDate: string;
+      timeDialog: {
+        timeLabel: string;
+        saveButtonLabel: string;
+        cancelButtonLabel: string;
+      };
+    };
+    labelSelector: {
+      buttonLabel: string;
+      buttonText: (num: number) => string;
+      labelOptionsLabel: string;
+    };
+    prioritySelector: {
+      buttonLabel: string;
+      optionsLabel: string;
+      p1: string;
+      p2: string;
+      p3: string;
+      p4: string;
+    };
+    projectSelector: {
+      buttonLabel: string;
+      selectorLabel: string;
+      optionsLabel: string;
+      search: {
+        label: string;
+        placeholder: string;
+      };
+    };
+  };
   onboardingModal: {
     failureNoticeMessage: string;
     explainer: string;

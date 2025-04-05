@@ -131,6 +131,60 @@ export const nl: DeepPartial<Translations> = {
       },
     },
   },
+  updateTaskModal: {
+    loadingMessage: "Todoist-gegevens laden...",
+    successNotice: "Taak succesvol aangemaakt",
+    errorNotice: "Kan taak niet aanmaken",
+    taskNamePlaceholder: "Taaknaam",
+    descriptionPlaceholder: "Beschrijving",
+    dueDatePlaceholder: "Due date",
+    appendedLinkToContentMessage: "Een link naar deze pagina wordt toegevoegd aan de taaknaam",
+    appendedLinkToDescriptionMessage:
+      "Een link naar deze pagina wordt toegevoegd aan de taakbeschrijving",
+    cancelButtonLabel: "Annuleren",
+    addTaskButtonLabel: "Taak toevoegen",
+    failedToFindInboxNotice: "Fout: inbox-project niet gevonden",
+    dateSelector: {
+      buttonLabel: "Vervaldatum instellen",
+      dialogLabel: "Vervaldatumkiezer",
+      suggestionsLabel: "Suggesties voor vervaldatum",
+      datePickerLabel: "Taakdatum",
+      emptyDate: "Vervaldatum",
+      today: "Vandaag",
+      tomorrow: "Morgen",
+      nextWeek: "Volgende week",
+      noDate: "Geen datum",
+      timeDialog: {
+        timeLabel: "Tijd",
+        saveButtonLabel: "Opslaan",
+        cancelButtonLabel: "Annuleren",
+      },
+    },
+    labelSelector: {
+      buttonLabel: "Labels instellen",
+      buttonText: (num: number) => {
+        return `Labels (${num})`;
+      },
+      labelOptionsLabel: "Labelopties",
+    },
+    prioritySelector: {
+      buttonLabel: "Prioriteit instellen",
+      optionsLabel: "Prioriteitsopties voor taken",
+      p1: "Prioriteit 1",
+      p2: "Prioriteit 2",
+      p3: "Prioriteit 3",
+      p4: "Prioriteit 4",
+    },
+    projectSelector: {
+      buttonLabel: "Project instellen",
+      selectorLabel: "Projectkiezer",
+      optionsLabel: "Projectopties",
+      search: {
+        label: "Projecten filteren",
+        placeholder: "Typ een projectnaam",
+      },
+    },
+  },
   onboardingModal: {
     failureNoticeMessage: "Opslaan van API-token mislukt",
     explainer:
