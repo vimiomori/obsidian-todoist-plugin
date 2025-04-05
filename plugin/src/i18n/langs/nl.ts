@@ -142,7 +142,7 @@ export const nl: DeepPartial<Translations> = {
     appendedLinkToDescriptionMessage:
       "Een link naar deze pagina wordt toegevoegd aan de taakbeschrijving",
     cancelButtonLabel: "Annuleren",
-    addTaskButtonLabel: "Taak toevoegen",
+    updateTaskButtonLabel: "Taak toevoegen",
     failedToFindInboxNotice: "Fout: inbox-project niet gevonden",
     dateSelector: {
       buttonLabel: "Vervaldatum instellen",

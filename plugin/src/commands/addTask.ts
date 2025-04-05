@@ -2,7 +2,7 @@ import type { MakeCommand } from "@/commands";
 import type { Translations } from "@/i18n/translation";
 import type TodoistPlugin from "@/index";
 import type { TaskTree } from "@/data/transformations/relationships";
-import type { TaskCreationOptions } from "@/ui/createTaskModal";
+import type { TaskCreationOptions } from "@/ui/taskModal";
 import { MarkdownView, type TFile } from "obsidian";
 
 export const addTask: MakeCommand = (plugin: TodoistPlugin, i18n: Translations["commands"], task?: TaskTree) => {
@@ -54,7 +54,7 @@ const makeEditCallback = (plugin: TodoistPlugin, opts?: Partial<TaskCreationOpti
   return () => {
     plugin.services.modals.taskUpdate({
       initialContent: task ? task.content : "",
-      taskId: task?.id,
+      taskId: task ? task.id : "",
       fileContext: getFileContext(plugin),
       options: {
         appendLinkToContent: false,

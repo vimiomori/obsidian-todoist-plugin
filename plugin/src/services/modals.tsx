@@ -3,7 +3,7 @@ import { Modal, Platform } from "obsidian";
 import type React from "react";
 import { type Root, createRoot } from "react-dom/client";
 import type TodoistPlugin from "..";
-import { CreateTaskModal } from "../ui/createTaskModal";
+import { CreateTaskModal, UpdateTaskModal } from "../ui/taskModal";
 import { OnboardingModal } from "../ui/onboardingModal";
 
 type ModalOptions = {
@@ -79,8 +79,8 @@ export class ModalHandler {
     }).open();
   }
 
-  public taskUpdate(props: React.ComponentProps<typeof CreateTaskModal>) {
-    new ReactModal(this.plugin, CreateTaskModal, props, {
+  public taskUpdate(props: React.ComponentProps<typeof UpdateTaskModal>) {
+    new ReactModal(this.plugin, UpdateTaskModal, props, {
       dontCloseOnExternalClick: Platform.isMobileApp,
     }).open();
   }

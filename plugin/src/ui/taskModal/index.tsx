@@ -18,6 +18,7 @@ import { PrioritySelector } from "./PrioritySelector";
 import { type ProjectIdentifier, ProjectSelector } from "./ProjectSelector";
 import { TaskContentInput } from "./TaskContentInput";
 import "./styles.scss";
+import type { Update } from "vite";
 
 export type TaskCreationOptions = {
   appendLinkToContent: boolean;
@@ -25,7 +26,13 @@ export type TaskCreationOptions = {
 };
 
 type CreateTaskProps = {
-  taskId?: TaskId,
+  initialContent: string;
+  fileContext: TFile | undefined;
+  options: TaskCreationOptions;
+};
+
+type UpdateTaskProps = {
+  taskId: TaskId,
   initialContent: string;
   fileContext: TFile | undefined;
   options: TaskCreationOptions;
@@ -60,10 +67,39 @@ export const CreateTaskModal: React.FC<CreateTaskProps> = (props) => {
   return <CreateTaskModalContent {...props} />;
 };
 
+// TODO: on update, refresh task list
+export const UpdateTaskModal: React.FC<UpdateTaskProps> = (props) => {
+  const plugin = PluginContext.use();
+
+  const [isReady, setIsReady] = useState(plugin.services.todoist.isReady());
+
+  const refreshIsReady = () => {
+    if (isReady) {
+      return;
+    }
+
+    setIsReady(plugin.services.todoist.isReady());
+  };
+
+  // We don't want to reset this when isReady changes.
+  // biome-ignore lint/correctness/useExhaustiveDependencies:
+  useEffect(() => {
+    const id = window.setInterval(refreshIsReady, 500);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const i18n = t().updateTaskModal;
+
+  if (!isReady) {
+    return <div className="task-creation-modal-root">{i18n.loadingMessage}</div>;
+  }
+
+  return <UpdateTaskModalContent {...props} />;
+};
+
 const CreateTaskModalContent: React.FC<CreateTaskProps> = ({
   initialContent,
   fileContext,
-  taskId,
   options: initialOptions,
 }) => {
   const plugin = PluginContext.use();
@@ -137,6 +173,101 @@ const CreateTaskModalContent: React.FC<CreateTaskProps> = ({
     }
   };
 
+  return (
+    <div className="task-creation-modal-root">
+      <TaskContentInput
+        className="task-name"
+        placeholder={i18n.taskNamePlaceholder}
+        content={content}
+        onChange={setContent}
+        autofocus={true}
+        onEnterKey={createTask}
+      />
+      <TaskContentInput
+        className="task-description"
+        placeholder={i18n.descriptionPlaceholder}
+        content={description}
+        onChange={setDescription}
+      />
+      <DueDateInput
+        className="task-description"
+        placeholder={i18n.dueDatePlaceholder}
+        onChange={setDueDate}
+        onEnterKey={createTask}
+      />
+      <div className="task-creation-selectors">
+        <DueDateSelector selected={dueDate} setSelected={setDueDate} />
+        <PrioritySelector selected={priority} setSelected={setPriority} />
+        <LabelSelector selected={labels} setSelected={setLabels} />
+      </div>
+      <div className="task-creation-notes">
+        <ul>
+          {options.appendLinkToContent && <li>{i18n.appendedLinkToContentMessage}</li>}
+          {options.appendLinkToDescription && <li>{i18n.appendedLinkToDescriptionMessage}</li>}
+        </ul>
+      </div>
+      <hr />
+      <div className="task-creation-controls">
+        <div>
+          <ProjectSelector selected={project} setSelected={setProject} />
+        </div>
+        <div className="task-creation-action">
+          <Button onPress={() => modal.close()} aria-label={i18n.cancelButtonLabel}>
+            {i18n.cancelButtonLabel}
+          </Button>
+          <Button
+            className="mod-cta"
+            isDisabled={isSubmitButtonDisabled}
+            onPress={createTask}
+            aria-label={i18n.addTaskButtonLabel}
+          >
+            {i18n.addTaskButtonLabel}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const UpdateTaskModalContent: React.FC<UpdateTaskProps> = ({
+  initialContent,
+  fileContext,
+  taskId,
+  options: initialOptions,
+}) => {
+  const plugin = PluginContext.use();
+  const settings = useSettingsStore();
+  const modal = ModalContext.use();
+
+  const [content, setContent] = useState(initialContent);
+  const [description, setDescription] = useState("");
+  const [dueDate, setDueDate] = useState<DueDate | undefined>(undefined);
+  const [priority, setPriority] = useState<Priority>(1);
+  const [labels, setLabels] = useState<Label[]>([]);
+  const [project, setProject] = useState<ProjectIdentifier>(getDefaultProject(plugin));
+
+  const [options, setOptions] = useState<TaskCreationOptions>(initialOptions);
+
+  const isSubmitButtonDisabled = content === "" && !options.appendLinkToContent;
+
+  const i18n = t().updateTaskModal;
+
+  const buildWithLink = (initial: string, withLink: boolean) => {
+    const builder = [initial];
+    if (withLink && fileContext !== undefined) {
+      builder.push(" ");
+      if (settings.shouldWrapLinksInParens) {
+        builder.push("(");
+      }
+      builder.push(getLinkForFile(fileContext));
+      if (settings.shouldWrapLinksInParens) {
+        builder.push(")");
+      }
+    }
+
+    return builder.join("");
+  };
+
   const updateTask = async () => {
     if (isSubmitButtonDisabled) {
       return;
@@ -166,7 +297,7 @@ const CreateTaskModalContent: React.FC<CreateTaskProps> = ({
     try {
       await plugin.services.todoist.actions.updateTask(
         buildWithLink(content, options.appendLinkToContent),
-        taskId ?? "",
+        taskId,
         params,
       );
       new Notice(i18n.successNotice);
@@ -184,7 +315,7 @@ const CreateTaskModalContent: React.FC<CreateTaskProps> = ({
         content={content}
         onChange={setContent}
         autofocus={true}
-        onEnterKey={createTask}
+        onEnterKey={updateTask}
       />
       <TaskContentInput
         className="task-description"
@@ -221,10 +352,10 @@ const CreateTaskModalContent: React.FC<CreateTaskProps> = ({
           <Button
             className="mod-cta"
             isDisabled={isSubmitButtonDisabled}
-            onPress={createTask}
-            aria-label={i18n.addTaskButtonLabel}
+            onPress={updateTask}
+            aria-label={i18n.updateTaskButtonLabel}
           >
-            {i18n.addTaskButtonLabel}
+            {i18n.updateTaskButtonLabel}
           </Button>
         </div>
       </div>

@@ -136,7 +136,7 @@ export type Translations = {
     appendedLinkToContentMessage: string;
     appendedLinkToDescriptionMessage: string;
     cancelButtonLabel: string;
-    addTaskButtonLabel: string;
+    updateTaskButtonLabel: string;
     failedToFindInboxNotice: string;
     dateSelector: {
       buttonLabel: string;

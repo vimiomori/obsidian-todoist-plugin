@@ -145,7 +145,7 @@ export const en: Translations = {
     appendedLinkToDescriptionMessage:
       "A link to this page will be appended to the task description",
     cancelButtonLabel: "Cancel",
-    addTaskButtonLabel: "Add task",
+    updateTaskButtonLabel: "Update task",
     failedToFindInboxNotice: "Error: could not find inbox project",
     dateSelector: {
       buttonLabel: "Set due date",
