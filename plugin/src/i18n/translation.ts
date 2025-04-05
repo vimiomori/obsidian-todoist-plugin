@@ -81,6 +81,7 @@ export type Translations = {
     errorNotice: string;
     taskNamePlaceholder: string;
     descriptionPlaceholder: string;
+    dueDatePlaceholder: string;
     appendedLinkToContentMessage: string;
     appendedLinkToDescriptionMessage: string;
     cancelButtonLabel: string;
@@ -181,6 +182,7 @@ export type Translations = {
     addTask: string;
     addTaskPageContent: string;
     addTaskPageDescription: string;
+    editTask: string;
   };
   tokenValidation: {
     emptyTokenError: string;

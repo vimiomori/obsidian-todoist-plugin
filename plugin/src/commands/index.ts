@@ -2,19 +2,22 @@ import {
   addTask,
   addTaskWithPageInContent,
   addTaskWithPageInDescription,
+  editTask,
 } from "@/commands/addTask";
 import { t } from "@/i18n";
 import type { Translations } from "@/i18n/translation";
 import type TodoistPlugin from "@/index";
+import type { TaskTree } from "@/data/transformations/relationships";
 import debug from "@/log";
 import type { Command as ObsidianCommand } from "obsidian";
 
 export type MakeCommand = (
   plugin: TodoistPlugin,
   i18n: Translations["commands"],
+  task?: TaskTree,
 ) => Omit<ObsidianCommand, "id">;
 
-const syncCommand: MakeCommand = (plugin: TodoistPlugin, i18n: Translations["commands"]) => {
+const syncCommand: MakeCommand = (plugin: TodoistPlugin, i18n: Translations["commands"], task?: TaskTree) => {
   return {
     name: i18n.sync,
     callback: async () => {
@@ -29,6 +32,7 @@ const commands = {
   "add-task": addTask,
   "add-task-page-content": addTaskWithPageInContent,
   "add-task-page-description": addTaskWithPageInDescription,
+  "edit-task": editTask,
 };
 
 export type CommandId = keyof typeof commands;
@@ -40,8 +44,8 @@ export const registerCommands = (plugin: TodoistPlugin) => {
   }
 };
 
-export const fireCommand = <K extends CommandId>(id: K, plugin: TodoistPlugin) => {
+export const fireCommand = <K extends CommandId>(id: K, plugin: TodoistPlugin, task?: TaskTree) => {
   const i18n = t().commands;
   const make = commands[id];
-  make(plugin, i18n).callback?.();
+  make(plugin, i18n, task).callback?.();
 };

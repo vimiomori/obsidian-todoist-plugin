@@ -85,6 +85,7 @@ export const en: Translations = {
     errorNotice: "Failed to create task",
     taskNamePlaceholder: "Task name",
     descriptionPlaceholder: "Description",
+    dueDatePlaceholder: "Due date",
     appendedLinkToContentMessage: "A link to this page will be appended to the task name",
     appendedLinkToDescriptionMessage:
       "A link to this page will be appended to the task description",
@@ -195,6 +196,7 @@ export const en: Translations = {
     addTask: "Add task",
     addTaskPageContent: "Add task with current page in task content",
     addTaskPageDescription: "Add task with current page in task description",
+    editTask: "Edit task",
   },
   tokenValidation: {
     emptyTokenError: "API token must not be empty",

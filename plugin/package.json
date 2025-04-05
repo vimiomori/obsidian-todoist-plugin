@@ -5,7 +5,7 @@
   "scripts": {
     "check": "tsc --noEmit",
     "dev": "npm run check && VITE_ENV=dev vite build",
-    "build": "vite build",
+    "build": "vite build && cp ./dist/* ~/code/src/github.com/vimiomori/BigDolphin/.obsidian/plugins/todoist-sync-plugin-vi/",
     "test": "vitest",
     "lint:check": "biome check ./src --config-path=../",
     "lint:fix": "biome check --write ./src --config-path=../"

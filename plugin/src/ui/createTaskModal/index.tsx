@@ -11,6 +11,7 @@ import type TodoistPlugin from "../..";
 import type { Label } from "../../api/domain/label";
 import type { CreateTaskParams, Priority } from "../../api/domain/task";
 import { type DueDate, DueDateSelector } from "./DueDateSelector";
+import { DueDateInput } from "./DueDateInput";
 import { LabelSelector } from "./LabelSelector";
 import { PrioritySelector } from "./PrioritySelector";
 import { type ProjectIdentifier, ProjectSelector } from "./ProjectSelector";
@@ -148,6 +149,11 @@ const CreateTaskModalContent: React.FC<CreateTaskProps> = ({
         placeholder={i18n.descriptionPlaceholder}
         content={description}
         onChange={setDescription}
+      />
+      <DueDateInput
+        className="task-description"
+        placeholder={i18n.dueDatePlaceholder}
+        onChange={setDueDate}
       />
       <div className="task-creation-selectors">
         <DueDateSelector selected={dueDate} setSelected={setDueDate} />

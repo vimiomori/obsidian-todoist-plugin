@@ -83,6 +83,7 @@ export const nl: DeepPartial<Translations> = {
     errorNotice: "Kan taak niet aanmaken",
     taskNamePlaceholder: "Taaknaam",
     descriptionPlaceholder: "Beschrijving",
+    dueDatePlaceholder: "Due date",
     appendedLinkToContentMessage: "Een link naar deze pagina wordt toegevoegd aan de taaknaam",
     appendedLinkToDescriptionMessage:
       "Een link naar deze pagina wordt toegevoegd aan de taakbeschrijving",
@@ -192,6 +193,7 @@ export const nl: DeepPartial<Translations> = {
     addTask: "Taak toevoegen",
     addTaskPageContent: "Taak toevoegen met huidige pagina in taakinhoud",
     addTaskPageDescription: "Taak toevoegen met huidige pagina in taakbeschrijving",
+    editTask: "Edit task",
   },
   tokenValidation: {
     emptyTokenError: "API-token mag niet leeg zijn",

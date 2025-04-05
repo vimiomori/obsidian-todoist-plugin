@@ -78,4 +78,10 @@ export class ModalHandler {
       dontCloseOnExternalClick: Platform.isMobileApp,
     }).open();
   }
+
+  public taskUpdate(props: React.ComponentProps<typeof CreateTaskModal>) {
+    new ReactModal(this.plugin, CreateTaskModal, props, {
+      dontCloseOnExternalClick: Platform.isMobileApp,
+    }).open();
+  }
 }

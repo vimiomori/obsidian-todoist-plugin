@@ -1,3 +1,4 @@
+import { type CommandId, fireCommand } from "@/commands";
 import { DueDate } from "@/data/dueDate";
 import type { TaskTree } from "@/data/transformations/relationships";
 import { t } from "@/i18n";
@@ -12,6 +13,7 @@ import { motion } from "framer-motion";
 import { Notice } from "obsidian";
 import React, { type MouseEvent } from "react";
 import { Checkbox } from "react-aria-components";
+import { getAddTaskCommandId, HeaderButton } from "@/ui/query/QueryHeader";
 
 type Props = {
   tree: TaskTree;
@@ -36,6 +38,8 @@ export const Task: React.FC<Props> = ({ tree }) => {
       new Notice(t().query.failedCloseMessage, 2000);
     }
   };
+
+  // const onEditTask = async 
 
   const isDisabled = tree.content.startsWith("*");
 
@@ -70,6 +74,11 @@ export const Task: React.FC<Props> = ({ tree }) => {
           {shouldRenderDescription && <DescriptionRenderer content={tree.description} />}
           <TaskMetadata query={query} task={tree} settings={settings} />
         </div>
+        <HeaderButton
+          className="add-task"
+          iconId="plus"
+          action={() => fireCommand("edit-task", plugin, tree)}
+        />
       </motion.div>
       {tree.children.length > 0 && <TaskList trees={tree.children} />}
     </>
@@ -152,3 +161,4 @@ const DescriptionRenderer: React.FC<DescriptionRendererProps> = ({ content }) =>
     </div>
   );
 };
+

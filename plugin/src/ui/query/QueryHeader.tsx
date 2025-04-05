@@ -9,7 +9,7 @@ import type React from "react";
 import { useRef } from "react";
 import { Button } from "react-aria-components";
 
-const getAddTaskCommandId = (settings: Settings): CommandId => {
+export const getAddTaskCommandId = (settings: Settings): CommandId => {
   switch (settings.addTaskButtonAddsPageLink) {
     case "content":
       return "add-task-page-content";
@@ -47,28 +47,28 @@ export const QueryHeader: React.FC<Props> = ({
   return (
     <div className="todoist-query-header">
       <span className="todoist-query-title">{title}</span>
-      <div className="todoist-query-controls">
-        <HeaderButton
-          className="add-task"
-          iconId="plus"
-          action={() => fireCommand(getAddTaskCommandId(settings), plugin)}
-        />
-        <HeaderButton
-          className={classNames("refresh-query", { "is-refreshing": isFetching })}
-          iconId="refresh-ccw"
-          action={async () => {
-            await refresh();
-          }}
-          tooltip={refreshedAtDisplay}
-        />
-        <HeaderButton
-          className="edit-query"
-          iconId="lucide-code-2"
-          action={() => {
-            editBlock();
-          }}
-        />
-      </div>
+      {/* <div className="todoist-query-controls"> */}
+      {/*   <HeaderButton */}
+      {/*     className="add-task" */}
+      {/*     iconId="plus" */}
+      {/*     action={() => fireCommand(getAddTaskCommandId(settings), plugin)} */}
+      {/*   /> */}
+      {/*   <HeaderButton */}
+      {/*     className={classNames("refresh-query", { "is-refreshing": isFetching })} */}
+      {/*     iconId="refresh-ccw" */}
+      {/*     action={async () => { */}
+      {/*       await refresh(); */}
+      {/*     }} */}
+      {/*     tooltip={refreshedAtDisplay} */}
+      {/*   /> */}
+      {/*   <HeaderButton */}
+      {/*     className="edit-query" */}
+      {/*     iconId="lucide-code-2" */}
+      {/*     action={() => { */}
+      {/*       editBlock(); */}
+      {/*     }} */}
+      {/*   /> */}
+      {/* </div> */}
     </div>
   );
 };
@@ -80,7 +80,7 @@ type ButtonProps = {
   tooltip?: string;
 };
 
-const HeaderButton: React.FC<ButtonProps> = ({ iconId, action, className, tooltip }) => {
+export const HeaderButton: React.FC<ButtonProps> = ({ iconId, action, className, tooltip }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const handler = async () => {

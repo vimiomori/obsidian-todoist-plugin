@@ -1,20 +1,18 @@
 import type { MakeCommand } from "@/commands";
 import type { Translations } from "@/i18n/translation";
 import type TodoistPlugin from "@/index";
+import type { TaskTree } from "@/data/transformations/relationships";
 import type { TaskCreationOptions } from "@/ui/createTaskModal";
 import { MarkdownView, type TFile } from "obsidian";
 
-export const addTask: MakeCommand = (plugin: TodoistPlugin, i18n: Translations["commands"]) => {
+export const addTask: MakeCommand = (plugin: TodoistPlugin, i18n: Translations["commands"], task?: TaskTree) => {
   return {
     name: i18n.addTask,
     callback: makeCallback(plugin),
   };
 };
 
-export const addTaskWithPageInContent: MakeCommand = (
-  plugin: TodoistPlugin,
-  i18n: Translations["commands"],
-) => {
+export const addTaskWithPageInContent: MakeCommand = (plugin: TodoistPlugin, i18n: Translations["commands"], task?: TaskTree) => {
   return {
     id: "add-task-page-content",
     name: i18n.addTaskPageContent,
@@ -22,10 +20,7 @@ export const addTaskWithPageInContent: MakeCommand = (
   };
 };
 
-export const addTaskWithPageInDescription: MakeCommand = (
-  plugin: TodoistPlugin,
-  i18n: Translations["commands"],
-) => {
+export const addTaskWithPageInDescription: MakeCommand = (plugin: TodoistPlugin, i18n: Translations["commands"], task?: TaskTree) => {
   return {
     id: "add-task-page-description",
     name: i18n.addTaskPageDescription,
@@ -33,10 +28,32 @@ export const addTaskWithPageInDescription: MakeCommand = (
   };
 };
 
+export const editTask: MakeCommand = (plugin: TodoistPlugin, i18n: Translations["commands"], task?: TaskTree) => {
+  return {
+    id: "edit-task",
+    name: i18n.editTask,
+    callback: makeEditCallback(plugin, undefined, task),
+  };
+};
+
 const makeCallback = (plugin: TodoistPlugin, opts?: Partial<TaskCreationOptions>) => {
   return () => {
     plugin.services.modals.taskCreation({
       initialContent: grabSelection(plugin),
+      fileContext: getFileContext(plugin),
+      options: {
+        appendLinkToContent: false,
+        appendLinkToDescription: false,
+        ...(opts ?? {}),
+      },
+    });
+  };
+};
+
+const makeEditCallback = (plugin: TodoistPlugin, opts?: Partial<TaskCreationOptions>, task?: TaskTree) => {
+  return () => {
+    plugin.services.modals.taskUpdate({
+      initialContent: task ? task.content : "",
       fileContext: getFileContext(plugin),
       options: {
         appendLinkToContent: false,
