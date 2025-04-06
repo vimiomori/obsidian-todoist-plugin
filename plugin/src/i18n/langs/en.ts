@@ -86,6 +86,7 @@ export const en: Translations = {
     taskNamePlaceholder: "Task name",
     descriptionPlaceholder: "Description",
     dueDatePlaceholder: "Due date",
+    projectPlaceholder: "Project",
     appendedLinkToContentMessage: "A link to this page will be appended to the task name",
     appendedLinkToDescriptionMessage:
       "A link to this page will be appended to the task description",
@@ -141,6 +142,7 @@ export const en: Translations = {
     taskNamePlaceholder: "Task name",
     descriptionPlaceholder: "Description",
     dueDatePlaceholder: "Due date",
+    projectPlaceholder: "Project",
     appendedLinkToContentMessage: "A link to this page will be appended to the task name",
     appendedLinkToDescriptionMessage:
       "A link to this page will be appended to the task description",

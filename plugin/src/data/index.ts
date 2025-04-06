@@ -23,7 +23,7 @@ export type SubscriptionResult =
 export type OnSubscriptionChange = (result: SubscriptionResult) => void;
 export type Refresh = () => Promise<void>;
 
-type DataAccessor = {
+export type DataAccessor = {
   projects: RepositoryReader<ProjectId, Project>;
   sections: RepositoryReader<SectionId, Section>;
   labels: RepositoryReader<LabelId, Label>;

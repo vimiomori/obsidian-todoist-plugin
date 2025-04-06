@@ -82,6 +82,7 @@ export type Translations = {
     taskNamePlaceholder: string;
     descriptionPlaceholder: string;
     dueDatePlaceholder: string;
+    projectPlaceholder: string;
     appendedLinkToContentMessage: string;
     appendedLinkToDescriptionMessage: string;
     cancelButtonLabel: string;
@@ -133,6 +134,7 @@ export type Translations = {
     taskNamePlaceholder: string;
     descriptionPlaceholder: string;
     dueDatePlaceholder: string;
+    projectPlaceholder: string;
     appendedLinkToContentMessage: string;
     appendedLinkToDescriptionMessage: string;
     cancelButtonLabel: string;

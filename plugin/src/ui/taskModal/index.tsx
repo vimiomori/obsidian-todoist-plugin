@@ -14,6 +14,7 @@ import type { Label } from "../../api/domain/label";
 import type { CreateTaskParams, Priority } from "../../api/domain/task";
 import { type DueDate, DueDateSelector, stringToDueDate } from "./DueDateSelector";
 import { DueDateInput } from "./DueDateInput";
+import { ProjectInput } from "./ProjectInput";
 import { LabelSelector } from "./LabelSelector";
 import { PrioritySelector } from "./PrioritySelector";
 import { type ProjectIdentifier, ProjectSelector } from "./ProjectSelector";
@@ -198,6 +199,12 @@ const CreateTaskModalContent: React.FC<CreateTaskProps> = ({
         onChange={setDueDate}
         onEnterKey={createTask}
       />
+      <ProjectInput
+        className="task-description"
+        placeholder={i18n.projectPlaceholder}
+        onChange={setProject}
+        onEnterKey={createTask}
+      />
       <div className="task-creation-selectors">
         <DueDateSelector selected={dueDate} setSelected={setDueDate} />
         <PrioritySelector selected={priority} setSelected={setPriority} />
@@ -330,6 +337,12 @@ const UpdateTaskModalContent: React.FC<UpdateTaskProps> = ({
         className="task-description"
         placeholder={i18n.dueDatePlaceholder}
         onChange={setDueDate}
+        onEnterKey={updateTask}
+      />
+      <ProjectInput
+        className="task-description"
+        placeholder={i18n.projectPlaceholder}
+        onChange={setProject}
         onEnterKey={updateTask}
       />
       <div className="task-creation-selectors">

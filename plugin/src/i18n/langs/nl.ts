@@ -83,6 +83,7 @@ export const nl: DeepPartial<Translations> = {
     errorNotice: "Kan taak niet aanmaken",
     taskNamePlaceholder: "Taaknaam",
     descriptionPlaceholder: "Beschrijving",
+    projectPlaceholder: "Project",
     dueDatePlaceholder: "Due date",
     appendedLinkToContentMessage: "Een link naar deze pagina wordt toegevoegd aan de taaknaam",
     appendedLinkToDescriptionMessage:
@@ -138,6 +139,7 @@ export const nl: DeepPartial<Translations> = {
     taskNamePlaceholder: "Taaknaam",
     descriptionPlaceholder: "Beschrijving",
     dueDatePlaceholder: "Due date",
+    projectPlaceholder: "Project",
     appendedLinkToContentMessage: "Een link naar deze pagina wordt toegevoegd aan de taaknaam",
     appendedLinkToDescriptionMessage:
       "Een link naar deze pagina wordt toegevoegd aan de taakbeschrijving",
