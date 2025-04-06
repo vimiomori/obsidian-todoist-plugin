@@ -76,7 +76,7 @@ export const Task: React.FC<Props> = ({ tree }) => {
         </div>
         <HeaderButton
           className="add-task"
-          iconId="plus"
+          iconId="pencil"
           action={() => fireCommand("edit-task", plugin, tree)}
         />
       </motion.div>

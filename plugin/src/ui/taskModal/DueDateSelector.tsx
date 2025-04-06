@@ -1,13 +1,14 @@
 import { t } from "@/i18n";
 import { timezone } from "@/infra/time";
 import {
-  type CalendarDate,
+  CalendarDate,
   DateFormatter,
   type Time,
   endOfWeek,
   isToday,
   toCalendarDateTime,
   today,
+  parseDate,
 } from "@internationalized/date";
 import type React from "react";
 import { useState } from "react";
@@ -294,3 +295,10 @@ const TimeDialog: React.FC<TimeDialogProps> = ({ selectedTime, setTime }) => {
     </Dialog>
   );
 };
+
+export const stringToDueDate = (input: string): DueDate => {
+  return {
+    date: parseDate(input),
+    time: undefined
+  }
+}

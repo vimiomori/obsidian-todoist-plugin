@@ -1,4 +1,4 @@
-import type { TaskId } from "@/api/domain/task";
+import type { TaskTree } from "@/data/transformations/relationships";
 import { t } from "@/i18n";
 import { timezone } from "@/infra/time";
 import { useSettingsStore } from "@/settings";
@@ -11,7 +11,7 @@ import { Button } from "react-aria-components";
 import type TodoistPlugin from "../..";
 import type { Label } from "../../api/domain/label";
 import type { CreateTaskParams, Priority } from "../../api/domain/task";
-import { type DueDate, DueDateSelector } from "./DueDateSelector";
+import { type DueDate, DueDateSelector, stringToDueDate } from "./DueDateSelector";
 import { DueDateInput } from "./DueDateInput";
 import { LabelSelector } from "./LabelSelector";
 import { PrioritySelector } from "./PrioritySelector";
@@ -32,8 +32,9 @@ type CreateTaskProps = {
 };
 
 type UpdateTaskProps = {
-  taskId: TaskId,
-  initialContent: string;
+  // taskId: TaskId,
+  task: TaskTree
+  // initialContent: string;
   fileContext: TFile | undefined;
   options: TaskCreationOptions;
 };
@@ -230,21 +231,20 @@ const CreateTaskModalContent: React.FC<CreateTaskProps> = ({
 };
 
 const UpdateTaskModalContent: React.FC<UpdateTaskProps> = ({
-  initialContent,
+  task,
   fileContext,
-  taskId,
   options: initialOptions,
 }) => {
   const plugin = PluginContext.use();
   const settings = useSettingsStore();
   const modal = ModalContext.use();
 
-  const [content, setContent] = useState(initialContent);
-  const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState<DueDate | undefined>(undefined);
-  const [priority, setPriority] = useState<Priority>(1);
-  const [labels, setLabels] = useState<Label[]>([]);
-  const [project, setProject] = useState<ProjectIdentifier>(getDefaultProject(plugin));
+  const [content, setContent] = useState(task.content);
+  const [description, setDescription] = useState(task.description);
+  const [dueDate, setDueDate] = useState<DueDate | undefined>(stringToDueDate(task.due ? task.due.date : ""));
+  const [priority, setPriority] = useState<Priority>(task.priority);
+  const [labels, setLabels] = useState<Label[]>(task.labels);
+  const [project, setProject] = useState<ProjectIdentifier>({ projectId: task.project.id });
 
   const [options, setOptions] = useState<TaskCreationOptions>(initialOptions);
 
@@ -297,7 +297,7 @@ const UpdateTaskModalContent: React.FC<UpdateTaskProps> = ({
     try {
       await plugin.services.todoist.actions.updateTask(
         buildWithLink(content, options.appendLinkToContent),
-        taskId,
+        task.id,
         params,
       );
       new Notice(i18n.successNotice);

@@ -51,10 +51,12 @@ const makeCallback = (plugin: TodoistPlugin, opts?: Partial<TaskCreationOptions>
 };
 
 const makeEditCallback = (plugin: TodoistPlugin, opts?: Partial<TaskCreationOptions>, task?: TaskTree) => {
+  if (task === undefined) {
+    return makeCallback(plugin, opts)
+  }
   return () => {
     plugin.services.modals.taskUpdate({
-      initialContent: task ? task.content : "",
-      taskId: task ? task.id : "",
+      task: task,
       fileContext: getFileContext(plugin),
       options: {
         appendLinkToContent: false,
