@@ -1,3 +1,4 @@
+import type { Refresh } from "@/data";
 import { type CommandId, fireCommand } from "@/commands";
 import { DueDate } from "@/data/dueDate";
 import type { TaskTree } from "@/data/transformations/relationships";
@@ -17,9 +18,10 @@ import { getAddTaskCommandId, HeaderButton } from "@/ui/query/QueryHeader";
 
 type Props = {
   tree: TaskTree;
+  refresh: Refresh;
 };
 
-export const Task: React.FC<Props> = ({ tree }) => {
+export const Task: React.FC<Props> = ({ tree, refresh }) => {
   const plugin = PluginContext.use();
   const query = QueryContext.use();
   const settings = useSettingsStore();
@@ -77,10 +79,10 @@ export const Task: React.FC<Props> = ({ tree }) => {
         <HeaderButton
           className="add-task"
           iconId="pencil"
-          action={() => fireCommand("edit-task", plugin, tree)}
+          action={() => fireCommand("edit-task", plugin, tree, refresh)}
         />
       </motion.div>
-      {tree.children.length > 0 && <TaskList trees={tree.children} />}
+      {tree.children.length > 0 && <TaskList trees={tree.children} refresh={refresh} />}
     </>
   );
 };

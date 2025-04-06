@@ -78,6 +78,7 @@ type ButtonProps = {
   action: () => Promise<void> | void;
   className: string;
   tooltip?: string;
+  // refresh: () => Promise<void>;
 };
 
 export const HeaderButton: React.FC<ButtonProps> = ({ iconId, action, className, tooltip }) => {
@@ -88,6 +89,7 @@ export const HeaderButton: React.FC<ButtonProps> = ({ iconId, action, className,
 
     if (result instanceof Promise) {
       await result;
+      // refresh()
     }
   };
 

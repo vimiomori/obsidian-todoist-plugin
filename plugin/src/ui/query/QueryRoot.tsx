@@ -89,7 +89,7 @@ export const QueryRoot: React.FC<Props> = ({ query, warnings }) => {
         refreshedTimestamp={refreshedTimestamp}
       />
       <QueryWarnings warnings={warnings} />
-      {hasFetchedOnce && <QueryResponseHandler result={result} query={query} />}
+      {hasFetchedOnce && <QueryResponseHandler result={result} query={query} refresh={refresh} />}
     </>
   );
 };
@@ -130,7 +130,8 @@ const getTitle = (query: Query, result: SubscriptionResult): string => {
 const QueryResponseHandler: React.FC<{
   result: SubscriptionResult;
   query: Query;
-}> = ({ result, query }) => {
+  refresh: Refresh;
+}> = ({ result, query, refresh }) => {
   if (result.type === "error") {
     return <Displays.Error kind={result.kind} />;
   }
@@ -147,14 +148,14 @@ const QueryResponseHandler: React.FC<{
   if (query.groupBy !== GroupVariant.None) {
     return (
       <QueryContext.Provider value={query}>
-        <Displays.Grouped tasks={tasks} />
+        <Displays.Grouped tasks={tasks} refresh={refresh} />
       </QueryContext.Provider>
     );
   }
 
   return (
     <QueryContext.Provider value={query}>
-      <Displays.List tasks={tasks} />
+      <Displays.List tasks={tasks} refresh={refresh} />
     </QueryContext.Provider>
   );
 };

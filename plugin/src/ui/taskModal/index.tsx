@@ -1,8 +1,9 @@
+import type { Refresh } from "@/data";
 import type { TaskTree } from "@/data/transformations/relationships";
 import { t } from "@/i18n";
 import { timezone } from "@/infra/time";
 import { useSettingsStore } from "@/settings";
-import { ModalContext, PluginContext } from "@/ui/context";
+import { ModalContext, PluginContext, QueryContext } from "@/ui/context";
 import { toCalendarDateTime, toZoned } from "@internationalized/date";
 import { Notice, type TFile } from "obsidian";
 import type React from "react";
@@ -35,6 +36,7 @@ type UpdateTaskProps = {
   // taskId: TaskId,
   task: TaskTree
   // initialContent: string;
+  refresh: Refresh;
   fileContext: TFile | undefined;
   options: TaskCreationOptions;
 };
@@ -234,6 +236,7 @@ const UpdateTaskModalContent: React.FC<UpdateTaskProps> = ({
   task,
   fileContext,
   options: initialOptions,
+  refresh,
 }) => {
   const plugin = PluginContext.use();
   const settings = useSettingsStore();
@@ -247,7 +250,6 @@ const UpdateTaskModalContent: React.FC<UpdateTaskProps> = ({
   const [project, setProject] = useState<ProjectIdentifier>({ projectId: task.project.id });
 
   const [options, setOptions] = useState<TaskCreationOptions>(initialOptions);
-
   const isSubmitButtonDisabled = content === "" && !options.appendLinkToContent;
 
   const i18n = t().updateTaskModal;
@@ -300,6 +302,7 @@ const UpdateTaskModalContent: React.FC<UpdateTaskProps> = ({
         task.id,
         params,
       );
+      refresh()
       new Notice(i18n.successNotice);
     } catch (err) {
       new Notice(i18n.errorNotice);
