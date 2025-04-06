@@ -1,6 +1,6 @@
 {
   "id": "todoist-sync-plugin",
-  "name": "Todoist Sync",
+  "name": "Todoist Sync Vi",
   "version": "2.0.1",
   "minAppVersion": "1.0.0",
   "description": "Materialize Todoist tasks within Obsidian notes.",
